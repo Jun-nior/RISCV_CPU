@@ -1,0 +1,141 @@
+QuestaSim-64 qrun 2024.1 Utility 2024.02 Feb  1 2024
+Start time: 23:57:34 on Jul 23,2025
+qrun -verbose -lint=default -parallel -vlog.sv -vopt.access=rw+/. -f file.f -top CPU_Top_tb_top -outdir CPU_Top -l CPU_Top/qrun.log -designfile CPU_Top/CPU_Top.bin -qwavedb=+memory=all+assertion+cell+signal+class+wavefile=CPU_Top/CPU_Top.db 
+***Vlog command: vlog -sv +incdir+RTL/ +incdir+TB/ ./RTL/Adder.sv ./RTL/AdderPC.sv ./RTL/ALU_Control.sv ./RTL/ALU.sv ./RTL/AND.sv ./RTL/Control_Unit.sv ./RTL/CPU_Top.sv ./RTL/Data_Memory.sv ./RTL/IM.sv ./RTL/ImmGen.sv ./RTL/Mux.sv ./RTL/PC.sv ./RTL/Regfile.sv ./TB/tb.sv -work CPU_Top/work -statslog CPU_Top/stats_log -writesessionid +CPU_Top/top_dus -csession=incr -csessiondir CPU_Top/sessions -csessionid=0
+QuestaSim-64 vlog 2024.1 Compiler 2024.02 Feb  1 2024
+Start time: 23:57:34 on Jul 23,2025
+vlog -sv "+incdir+RTL/" "+incdir+TB/" ./RTL/Adder.sv ./RTL/AdderPC.sv ./RTL/ALU_Control.sv ./RTL/ALU.sv ./RTL/AND.sv ./RTL/Control_Unit.sv ./RTL/CPU_Top.sv ./RTL/Data_Memory.sv ./RTL/IM.sv ./RTL/ImmGen.sv ./RTL/Mux.sv ./RTL/PC.sv ./RTL/Regfile.sv ./TB/tb.sv -work CPU_Top/work -statslog CPU_Top/stats_log -writesessionid "+CPU_Top/top_dus" -csession=incr -csessiondir CPU_Top/sessions -csessionid=0 
+-- Skipping ./RTL/Adder.sv
+-- Skipping ./RTL/AdderPC.sv
+-- Skipping ./RTL/ALU_Control.sv
+-- Skipping ./RTL/ALU.sv
+-- Skipping ./RTL/AND.sv
+-- Skipping ./RTL/Control_Unit.sv
+-- Skipping ./RTL/CPU_Top.sv
+-- Skipping ./RTL/Data_Memory.sv
+-- Compiling module Instruction_Memory
+-- Skipping ./RTL/ImmGen.sv
+-- Skipping ./RTL/Mux.sv
+-- Skipping ./RTL/PC.sv
+-- Skipping ./RTL/Regfile.sv
+-- Skipping ./TB/tb.sv
+
+Top level modules:
+	Instruction_Memory
+End time: 23:57:34 on Jul 23,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+*** Report compile parallel jobs:
+=== Total number of jobs: 1
+=== Total number of parallel jobs requested (-jcomp): N/A
+=== Total number of executed jobs: 1
+=== Total number of skipped jobs: 0
+=== Max number of jobs running in parallel at some point in time: 1
+For more detailed parallel flow information add " -scriptg <output file>"
+***Vopt command: vopt -lint=default -access=rw+/. -designfile CPU_Top/CPU_Top.bin CPU_Top_tb_top -work CPU_Top/work -statslog CPU_Top/stats_log -csession=incr -csessiondir CPU_Top/sessions -o qrun_opt
+QuestaSim-64 vopt 2024.1 Compiler 2024.02 Feb  1 2024
+Start time: 23:57:34 on Jul 23,2025
+vopt -lint=default -access=rw+/. -designfile CPU_Top/CPU_Top.bin CPU_Top_tb_top -work CPU_Top/work -statslog CPU_Top/stats_log -csession=incr -csessiondir CPU_Top/sessions -o qrun_opt -csessionid=1 
+
+Top level modules:
+	CPU_Top_tb_top
+
+Analyzing design...
+-- Loading module CPU_Top_tb_top
+-- Loading module CPU_Top
+-- Loading module Program_Counter
+-- Loading module AdderPC
+-- Loading module Instruction_Memory
+-- Loading module Register_File
+-- Loading module Immediate_Generator
+-- Loading module Control_Unit
+-- Loading module ALU_Control
+-- Loading module ALU
+-- Loading module Mux
+-- Loading module Adder
+-- Loading module AND
+-- Loading module Data_Memory
+Incremental compilation check found 11 design-units (out of 14) may be reused.
+Optimizing 3 design-units (inlining 15/16 module instances):
+-- Inlining module Program_Counter(fast)
+-- Inlining module AdderPC(fast)
+-- Inlining module Instruction_Memory(fast)
+-- Inlining module Register_File(fast)
+-- Inlining module Immediate_Generator(fast)
+-- Inlining module Control_Unit(fast)
+-- Inlining module ALU_Control(fast)
+-- Inlining module ALU(fast)
+-- Inlining module Mux(fast)
+-- Inlining module Adder(fast)
+-- Inlining module AND(fast)
+-- Inlining module Data_Memory(fast)
+-- Inlining module CPU_Top(fast)
+-- Optimizing module CPU_Top_tb_top(fast)
+viscom:
+VISCOM: Start time: 23:57:34 on Jul 23,2025
+
+VISCOM: QuestaSim C:/questasim64_2024.1/win64/VisualizerRls/bin/viscom.exe 2024.1 at 2024.02 Feb  1 2024
+VISCOM: Writing CPU_Top/CPU_Top.bin
+VISCOM: Done writing CPU_Top/CPU_Top.bin
+VISCOM: End time: 23:57:34 on Jul 23,2025, Elapsed time: 0:00:00 (Process Size : 41MB, Peak Process Size : 3GB)
+
+
+Optimized design name is qrun_opt
+End time: 23:57:34 on Jul 23,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+***Vsim command: vsim -qwavedb=+memory=all+assertion+cell+signal+class+wavefile=CPU_Top/CPU_Top.db -lib CPU_Top/work -c -do "run -all; quit -f" -statslog CPU_Top/stats_log qrun_opt -appendlog -l CPU_Top/qrun.log -csession=incr -csessiondir CPU_Top/sessions -csessionid=2
+# vsim -qwavedb=+memory=all+assertion+cell+signal+class+wavefile=CPU_Top/CPU_Top.db -lib CPU_Top/work -c -do "run -all; quit -f" -statslog CPU_Top/stats_log qrun_opt -appendlog -l CPU_Top/qrun.log -csession=incr -csessiondir CPU_Top/sessions -csessionid=2 
+# Start time: 23:57:35 on Jul 23,2025
+# Loading Siemens Visualizer shared object 'C:/questasim64_2024.1/win64/VisualizerRls/bin/libqvisualizer.dll'
+# //  Questa Sim-64
+# //  Version 2024.1 win64 Feb  1 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.CPU_Top_tb_top(fast)
+# run -all
+#  wave file name = CPU_Top/CPU_Top.db
+# 
+# *****************************************************************
+#    Using QuickLZ compression software.
+# *****************************************************************
+# 
+# Objects inside cell instances will be logged.
+# qwavedb_dumpvars: Initiating qwavedb class logging
+# 
+# 	Loading class filter file 'C:/questasim64_2024.1/win64/VisualizerRls/bin/../config/uvmclassfilter.txt'
+# 
+# qwavedb_dumpvars: Done initiating qwavedb class logging
+# Siemens software version 2024.1 (Build number 0)
+# Unpublished work. Copyright 2025 Siemens
+# qwavedb_dumpvars: Initiating qwavedb waveform capturing
+# 
+# 	Max. memory depth is UNLIMITED.
+# 	Memory dimensions are limited to no more than 5.
+# 	Arrays of 5 unpacked dimensions or less will be logged.
+# QWAVEDB:  logging of additional nested aggregates (UPA of UPS of UPA) is enabled.
+#   (Dumping 3 arrays)
+# 
+# qwavedb_dumpvars: Done initiating qwavedb waveform capturing
+# 
+# ** Note: $finish    : ./TB/tb.sv(23)
+#    Time: 115 ns  Iteration: 0  Instance: /CPU_Top_tb_top
+# qwavedb_dumpvars : Simulation ending at [0 115] 0
+# End time: 23:57:35 on Jul 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+End time: 23:57:36 on Jul 23,2025, Elapsed time: 0:00:02
+*** Summary *********************************************
+    qrun: Errors:   0, Warnings:   0
+    vlog: Errors:   0, Warnings:   0
+    vopt: Errors:   0, Warnings:   0
+    vsim: Errors:   0, Warnings:   0
+  Totals: Errors:   0, Warnings:   0

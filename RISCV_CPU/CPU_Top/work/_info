@@ -1,0 +1,417 @@
+m255
+K4
+z2
+Z0 !s99 nomlopt
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+!s11f vlog 2024.1 2024.02, Feb  1 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dC:/Project/RISCV_CPU
+vAdder
+Z2 2./RTL/Adder.sv|./RTL/AdderPC.sv|./RTL/ALU_Control.sv|./RTL/ALU.sv|./RTL/AND.sv|./RTL/Control_Unit.sv|./RTL/CPU_Top.sv|./RTL/Data_Memory.sv|./RTL/IM.sv|./RTL/ImmGen.sv|./RTL/Mux.sv|./RTL/PC.sv|./RTL/Regfile.sv|./TB/tb.sv
+Z3 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z4 !s110 1753112932
+!i10b 1
+!s100 ;RmXZKolOmOUe4hz5Lh@J2
+IE^MRo@?lekVXa<D4RKNZf3
+S1
+R1
+w1753107511
+8./RTL/Adder.sv
+F./RTL/Adder.sv
+!i122 0
+L0 1 11
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+Z6 OL;L;2024.1;79
+r1
+!s85 0
+31
+Z7 !s108 1753112932.000000
+Z8 !s107 ./TB/tb.sv|./RTL/Regfile.sv|./RTL/PC.sv|./RTL/Mux.sv|./RTL/ImmGen.sv|./RTL/IM.sv|./RTL/Data_Memory.sv|./RTL/CPU_Top.sv|./RTL/Control_Unit.sv|./RTL/AND.sv|./RTL/ALU.sv|./RTL/ALU_Control.sv|./RTL/AdderPC.sv|./RTL/Adder.sv|
+Z9 !s90 -sv|+incdir+RTL/|+incdir+TB/|./RTL/Adder.sv|./RTL/AdderPC.sv|./RTL/ALU_Control.sv|./RTL/ALU.sv|./RTL/AND.sv|./RTL/Control_Unit.sv|./RTL/CPU_Top.sv|./RTL/Data_Memory.sv|./RTL/IM.sv|./RTL/ImmGen.sv|./RTL/Mux.sv|./RTL/PC.sv|./RTL/Regfile.sv|./TB/tb.sv|-work|CPU_Top/work|-statslog|CPU_Top/stats_log|-writesessionid|+CPU_Top/top_dus|-csession=incr|-csessiondir|CPU_Top/sessions|-csessionid=0|
+!i113 0
+Z10 o-sv -work CPU_Top/work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z11 !s92 -sv +incdir+RTL/ +incdir+TB/ -work CPU_Top/work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z12 tCvgOpt 0
+n@adder
+vAdderPC
+R2
+R3
+R4
+!i10b 1
+!s100 h?mbk9>>RoLeaJDCN4Z?20
+I_>a;lnMEm=H=1gFKkIH>]0
+S1
+R1
+w1753108775
+8./RTL/AdderPC.sv
+F./RTL/AdderPC.sv
+!i122 0
+L0 1 10
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@adder@p@c
+vALU
+R2
+R3
+Z13 !s110 1753287747
+!i10b 1
+!s100 UM:5njM2:hlL9QRYn3G510
+IDNeLPe8>[IXP7_GNmFem`2
+S1
+R1
+w1753287703
+8./RTL/ALU.sv
+F./RTL/ALU.sv
+!i122 10
+L0 1 42
+R5
+R6
+r1
+!s85 0
+31
+Z14 !s108 1753287747.000000
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@a@l@u
+vALU_Control
+R2
+R3
+R4
+!i10b 1
+!s100 <8CoQEl3>zRaJE[TVXzNN2
+IWBe:[La3547Dm87Q<8bM>3
+S1
+R1
+w1753107884
+8./RTL/ALU_Control.sv
+F./RTL/ALU_Control.sv
+!i122 0
+L0 1 40
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@a@l@u_@control
+vAND
+R2
+R3
+R4
+!i10b 1
+!s100 6oPE^oEj6R^<CWFjXHInW2
+IcJ791?g]jci^lk`R1=f<K1
+S1
+R1
+w1752724972
+8./RTL/AND.sv
+F./RTL/AND.sv
+!i122 0
+L0 1 9
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@a@n@d
+vControl_Unit
+R2
+R3
+R13
+!i10b 1
+!s100 ]nn>WGmf<MPAPoKGm8Bz>3
+I=0T_6R@[l35NdX;B@F=9<2
+S1
+R1
+w1753287744
+8./RTL/Control_Unit.sv
+F./RTL/Control_Unit.sv
+!i122 10
+L0 1 58
+R5
+R6
+r1
+!s85 0
+31
+R14
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@control_@unit
+vCPU_Top
+R2
+R3
+R4
+!i10b 1
+!s100 B<hf4<@TP;FobC?bmM]kW3
+IE7<QYKX9n6bZ4PzZgLP[c0
+S1
+R1
+w1753109222
+8./RTL/CPU_Top.sv
+F./RTL/CPU_Top.sv
+!i122 0
+L0 1 138
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@c@p@u_@top
+vCPU_Top_tb_top
+R2
+R3
+!s110 1753112966
+!i10b 1
+!s100 ]dBjZ5doFTn6mjcb5:?F@3
+IoAekO;?[d11PYhZ]B_Gi91
+S1
+R1
+w1753112958
+8./TB/tb.sv
+F./TB/tb.sv
+!i122 1
+L0 1 26
+R5
+R6
+r1
+!s85 0
+31
+!s108 1753112966.000000
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@c@p@u_@top_tb_top
+vData_Memory
+R2
+R3
+R4
+!i10b 1
+!s100 WdNAj7hLKcQ2eE;l>2Fg`1
+I:ReHzISYmW85cE<6R:Omk2
+S1
+R1
+w1752684933
+8./RTL/Data_Memory.sv
+F./RTL/Data_Memory.sv
+!i122 0
+L0 1 28
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@data_@memory
+vImmediate_Generator
+R2
+R3
+!s110 1753288510
+!i10b 1
+!s100 Z1__z:ENYBoJh?G:XYLzY1
+IE4>SBZmUU?CKXYC@2M9Fd1
+S1
+R1
+w1753288497
+8./RTL/ImmGen.sv
+F./RTL/ImmGen.sv
+!i122 11
+L0 1 37
+R5
+R6
+r1
+!s85 0
+31
+!s108 1753288510.000000
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@immediate_@generator
+vInstruction_Memory
+R2
+R3
+Z15 !s110 1753289854
+!i10b 1
+!s100 60KfGUPP_MjHdBLPH3:Ch2
+I;oYARlg6=4_ZKUUf58h6;0
+S1
+R1
+w1753289851
+8./RTL/IM.sv
+F./RTL/IM.sv
+!i122 13
+L0 1 27
+R5
+R6
+r1
+!s85 0
+31
+!s108 1753289854.000000
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@instruction_@memory
+vMux
+R2
+R3
+R4
+!i10b 1
+!s100 HLo_j13=;CUmQE?<go5cR0
+II?Hd:KeMEz_8GiX26VCP>3
+S1
+R1
+w1753109139
+8./RTL/Mux.sv
+F./RTL/Mux.sv
+!i122 0
+L0 1 12
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@mux
+vProgram_Counter
+R2
+R3
+R4
+!i10b 1
+!s100 Yhe9UNdH8ULCKz_F0oPfd2
+IWFVm4845@l6a8CalL0;5[0
+S1
+R1
+w1753109120
+8./RTL/PC.sv
+F./RTL/PC.sv
+!i122 0
+L0 1 22
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@program_@counter
+Tqrun_opt
+!s128 CPU_Top/CPU_Top.bin
+R15
+V6Y;J8Km_31<3OGRRZ6HlJ1
+04 14 4 work CPU_Top_tb_top fast 0
+R0
+!s12f OEM100
+!s12b OEM100
+!s124 OEM100
+o-lint=default -access=rw+/. -designfile CPU_Top/CPU_Top.bin -work CPU_Top/work
+R12
+nqrun_opt
+OL;O;2024.1;79
+R1
+vRegister_File
+R2
+R3
+!s110 1753245697
+!i10b 1
+!s100 W31^B>1E2Jzce;<LAnBXL0
+I4EAdej@BTfLgHFiQoR6PS1
+S1
+R1
+w1753245694
+8./RTL/Regfile.sv
+F./RTL/Regfile.sv
+!i122 5
+L0 1 66
+R5
+R6
+r1
+!s85 0
+31
+!s108 1753245697.000000
+R8
+R9
+!i113 0
+R10
+R11
+R12
+n@register_@file
