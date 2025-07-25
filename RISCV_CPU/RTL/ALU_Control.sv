@@ -29,6 +29,9 @@ always @(*) begin
         6'b10_0_110: begin
             control_o_reg = 4'b0001;
         end
+        6'b00_0_010: begin // lw
+            control_o_reg = 4'b0010;
+        end
         default: begin
             control_o_reg = 4'bxxxx;
         end

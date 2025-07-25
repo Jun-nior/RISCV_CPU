@@ -15,6 +15,12 @@ R0
 R0
 R0
 R0
+R0
+R0
+R0
+R0
+R0
+R0
 !s11f vlog 2024.1 2024.02, Feb  1 2024
 13
 !s112 1.1
@@ -107,23 +113,23 @@ n@a@l@u
 vALU_Control
 R2
 R3
-R4
+!s110 1753423687
 !i10b 1
-!s100 <8CoQEl3>zRaJE[TVXzNN2
-IWBe:[La3547Dm87Q<8bM>3
+!s100 z3^4OWL?Rk0zP7KaLo]BX0
+IX2SH>YXA<4`VF7UR6h[zz2
 S1
 R1
-w1753107884
+w1753423685
 8./RTL/ALU_Control.sv
 F./RTL/ALU_Control.sv
-!i122 0
-L0 1 40
+!i122 16
+L0 1 43
 R5
 R6
 r1
 !s85 0
 31
-R7
+!s108 1753423687.000000
 R8
 R9
 !i113 0
@@ -242,23 +248,23 @@ n@c@p@u_@top_tb_top
 vData_Memory
 R2
 R3
-R4
+!s110 1753423983
 !i10b 1
-!s100 WdNAj7hLKcQ2eE;l>2Fg`1
-I:ReHzISYmW85cE<6R:Omk2
+!s100 W1X29HUO2U2_`AE<^d`g^2
+IF:P[GzDO5DfG6eE>Cc`Gi0
 S1
 R1
-w1752684933
+w1753423980
 8./RTL/Data_Memory.sv
 F./RTL/Data_Memory.sv
-!i122 0
+!i122 17
 L0 1 28
 R5
 R6
 r1
 !s85 0
 31
-R7
+!s108 1753423983.000000
 R8
 R9
 !i113 0
@@ -296,23 +302,23 @@ n@immediate_@generator
 vInstruction_Memory
 R2
 R3
-Z15 !s110 1753289854
+Z15 !s110 1753428537
 !i10b 1
-!s100 60KfGUPP_MjHdBLPH3:Ch2
-I;oYARlg6=4_ZKUUf58h6;0
+!s100 Q6RkQke^JE4PUHM8OTHf02
+IFoLDAMK7ombGb`=fDf9_^3
 S1
 R1
-w1753289851
+w1753428533
 8./RTL/IM.sv
 F./RTL/IM.sv
-!i122 13
-L0 1 27
+!i122 19
+L0 1 30
 R5
 R6
 r1
 !s85 0
 31
-!s108 1753289854.000000
+!s108 1753428536.000000
 R8
 R9
 !i113 0
@@ -377,7 +383,7 @@ n@program_@counter
 Tqrun_opt
 !s128 CPU_Top/CPU_Top.bin
 R15
-V6Y;J8Km_31<3OGRRZ6HlJ1
+V0]UjW1GKfWO_MjCZX`le72
 04 14 4 work CPU_Top_tb_top fast 0
 R0
 !s12f OEM100
