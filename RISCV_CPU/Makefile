@@ -1,10 +1,10 @@
-TEST_MODULE?=adder_4_bit
+TEST_MODULE?=CPU_Top
 
 TOP_MODULE?=$(TEST_MODULE)_tb_top
 
 FILE_LIST?=file.f
 
-UVM_TEST?=$(TEST_MODULE)_basic_test
+UVM_TEST?=base_test
 
 UVM_VERBOSITY?=UVM_LOW
 NO_OF_TRANSACTIONS?=1
@@ -23,6 +23,8 @@ run_uvm: clean
 		-vopt.access=rw+/. \
 		-f $(FILE_LIST) \
 		+define+NO_OF_TRANSACTIONS=$(NO_OF_TRANSACTIONS) \
+		+define+UVM_NO_DEPRECATED \
+		+define+UVM_OBJECT_MUST_HAVE_CONSTRUCTOR \
 		-top $(TOP_MODULE) \
 		+UVM_TESTNAME=$(UVM_TEST) \
 		+UVM_VERBOSITY=$(UVM_VERBOSITY) \

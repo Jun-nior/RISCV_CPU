@@ -3,7 +3,11 @@ module CPU_Top #(
     parameter DAT_WIDTH = 32
 ) (
     input   clk,
-    input   rst_n
+    input   rst_n,
+
+    //test-only purpose IM
+    output  [ADDR_WIDTH - 1 : 0]    im_PC_o,
+    input   [ADDR_WIDTH - 1 : 0]    im_wdata_i
 );
 
 logic   [ADDR_WIDTH - 1 : 0]    PC_top;
@@ -41,12 +45,15 @@ AdderPC Add1 (
     .adder_o(adder1_o_top)
 );
 
-Instruction_Memory IM (
-    .clk(clk),
-    .rst_n(rst_n),
-    .raddr(PC_top),
-    .im_o(im_top)
-);
+// Instruction_Memory IM (
+//     .clk(clk),
+//     .rst_n(rst_n),
+//     .raddr(PC_top),
+//     .im_o(im_top)
+// );
+
+assign im_PC_o = PC_top;
+assign im_top = im_wdata_i;
 
 Register_File Registers (
     .clk(clk),

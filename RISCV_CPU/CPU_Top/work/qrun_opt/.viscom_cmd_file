@@ -1,1 +1,0 @@
-C:/questasim64_2024.1/win64/VisualizerRls/bin/viscom.exe -nolock -quiet -jmem_size 393216 -lint=default -access=rw+/. +designfile+CPU_Top/CPU_Top.bin CPU_Top_tb_top -work CPU_Top/work -csessiondir CPU_Top/sessions -o qrun_opt +__design_bin_path+C:/Project/RISCV_CPU/CPU_Top -genidl

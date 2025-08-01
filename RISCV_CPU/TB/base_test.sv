@@ -1,0 +1,32 @@
+class base_test extends uvm_test;
+    `uvm_component_utils(base_test)
+
+    base_env env;
+    base_sequence seq;
+    im_add_sequence add_seq;
+
+    function new (string name = "base_test", uvm_component parent = null);
+        super.new(name, parent);
+    endfunction
+
+    function void build_phase (uvm_phase phase);
+        super.build_phase(phase);
+        env = base_env::type_id::create("env",this);
+        // seq = base_sequence::type_id::create("seq");
+        add_seq = im_add_sequence::type_id::create("add_seq");
+    endfunction
+
+    task run_phase(uvm_phase phase);
+        super.run_phase(phase);
+        phase.raise_objection(this);
+        add_seq.start(env.im_agt.sqr);
+        phase.drop_objection(this);
+        `uvm_info(get_type_name(), "Finish starting add sequence", UVM_LOW)
+    endtask
+
+    function void start_of_simulation_phase(uvm_phase phase);
+        super.start_of_simulation_phase(phase);
+        `uvm_info(get_type_name(), "---UVM Testbench Topology---", UVM_LOW)
+        uvm_root::get().print_topology();
+    endfunction
+endclass

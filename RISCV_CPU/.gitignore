@@ -1,0 +1,12 @@
+CPU_Top/
+.visualizer/
+qrun.log
+snapshot
+stats_log
+top_dus
+history
+history.cnt
+*.wlf
+transcript
+*.bin
+*.db
