@@ -16,8 +16,29 @@ class im_add_sequence extends base_sequence#(im_item);
 
     virtual task body();
         `uvm_do_with(req, {
-            instruction == 32'h002081B3;
+            inst_type == ADD;
+            rs1 == 3;
+            rs2 == 5;
+            rd  == 10;
         })
         `uvm_info(get_type_name(), "Finish creating add instruction", UVM_LOW)
+    endtask
+endclass
+
+class reset_sequence extends base_sequence#(reset_item);
+    `uvm_object_utils(reset_sequence)
+
+    function new (string name = "reset_sequence");
+        super.new(name);
+    endfunction
+
+    virtual task body();
+        `uvm_do_with(req, {
+            rst_n == 0;
+        })
+        `uvm_do_with(req, {
+            rst_n == 1;
+        })
+        `uvm_info(get_type_name(), "Finish reset", UVM_LOW)
     endtask
 endclass

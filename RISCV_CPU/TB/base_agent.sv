@@ -38,3 +38,17 @@ class im_agent extends base_agent #(im_item);
         sqr = uvm_sequencer#(im_item)::type_id::create("sqr", this);
     endfunction
 endclass
+
+class reset_agent extends base_agent #(reset_item);
+    `uvm_component_utils(reset_agent)
+
+    function new (string name = "reset_agent", uvm_component parent);
+        super.new(name,parent);
+    endfunction
+
+    virtual function void build_phase (uvm_phase phase);
+        super.build_phase(phase);
+        drv = reset_driver::type_id::create("drv", this);
+        sqr = uvm_sequencer#(reset_item)::type_id::create("sqr", this);
+    endfunction
+endclass

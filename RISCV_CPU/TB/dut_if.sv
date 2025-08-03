@@ -1,8 +1,12 @@
 interface cpu_interface(input logic clk);
     logic rst_n;
+
+    clocking tb_cb @(posedge clk);
+        output rst_n;
+    endclocking
 endinterface
 
-interface im_interface(input logic clk, rst_n);
+interface im_interface(input logic clk);
     logic   [31:0]  PC_o; // CPU -> TB
     logic   [31:0]  ins;  // TB -> CPU
 

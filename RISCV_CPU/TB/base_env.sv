@@ -3,6 +3,7 @@ class base_env extends uvm_env;
 
     base_agent agt;
     im_agent im_agt;
+    reset_agent r_agt;
     base_scoreboard scb;
 
     function new (string name = "base_env", uvm_component parent);
@@ -13,6 +14,7 @@ class base_env extends uvm_env;
         super.build_phase(phase);
         // agt = base_agent::type_id::create("agt",this);
         im_agt = im_agent::type_id::create("im_agt",this);
+        r_agt = reset_agent::type_id::create("r_agt",this);
         scb = base_scoreboard::type_id::create("scb", this);
     endfunction
 
