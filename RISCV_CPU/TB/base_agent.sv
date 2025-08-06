@@ -4,11 +4,13 @@ class base_agent #(
 ) extends uvm_agent;
 
     typedef uvm_sequencer#(REQ, RSP) sequencer_t;
+    typedef base_monitor#(REQ)       monitor_t;
     typedef base_driver#(REQ, RSP)   driver_t;
 
     driver_t    drv;
     sequencer_t sqr;
-
+    monitor_t   mon;
+    
     function new (string name = "base_agent", uvm_component parent);
         super.new(name,parent);
     endfunction
@@ -34,8 +36,11 @@ class im_agent extends base_agent #(im_item);
 
     virtual function void build_phase (uvm_phase phase);
         super.build_phase(phase);
-        drv = im_driver::type_id::create("drv", this);
-        sqr = uvm_sequencer#(im_item)::type_id::create("sqr", this);
+        mon = im_monitor::type_id::create("mon", this);
+        if (is_active == UVM_ACTIVE) begin
+            drv = im_driver::type_id::create("drv", this);
+            sqr = uvm_sequencer#(im_item)::type_id::create("sqr", this);
+        end
     endfunction
 endclass
 

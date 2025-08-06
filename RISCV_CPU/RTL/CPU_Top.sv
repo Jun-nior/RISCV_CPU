@@ -7,7 +7,13 @@ module CPU_Top #(
 
     //test-only purpose IM
     output  [ADDR_WIDTH - 1 : 0]    im_PC_o,
-    input   [ADDR_WIDTH - 1 : 0]    im_wdata_i
+    input   [ADDR_WIDTH - 1 : 0]    im_wdata_i,
+
+    //monitor-capture-only purpose
+    output  [4 : 0]                 rs1_o,
+    output  [4 : 0]                 rs2_o,
+    output  [4 : 0]                 rd_o,
+    output  [ADDR_WIDTH - 1 : 0]    ALU_o
 );
 
 logic   [ADDR_WIDTH - 1 : 0]    PC_top;
@@ -67,6 +73,10 @@ Register_File Registers (
     .rdata2(rdata2_top)
 );
 
+assign rs1_o    = im_top[19:15];
+assign rs2_o    = im_top[24:20];
+assign rd_o     = im_top[11:7];
+
 Immediate_Generator ImmGen (
     .instruction(im_top),
     .opcode(im_top[6:0]),
@@ -98,6 +108,8 @@ ALU ALU(
     .ALU_o(ALU_o_top),
     .zero(zero_top)
 );
+
+assign ALU_o = ALU_o_top;
 
 Mux ALU_mux (
     .sel(ALUSrc_top),

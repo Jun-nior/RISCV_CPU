@@ -15,12 +15,22 @@ class im_add_sequence extends base_sequence#(im_item);
     endfunction
 
     virtual task body();
-        `uvm_do_with(req, {
-            inst_type == ADD;
-            rs1 == 3;
-            rs2 == 5;
-            rd  == 10;
-        })
+        // `uvm_do_with(req, {
+        //     inst_type == ADD;
+        //     rs1 == 3;
+        //     rs2 == 5;
+        //     rd  == 10;
+        // })
+        // `uvm_do_with(req, {
+        //     inst_type == ADDI;
+        //     rs1 == 12;
+        //     imm == 10;
+        //     rs2 == 0;
+        //     rd  == 11;
+        // })
+        repeat(1000) begin
+            `uvm_do(req)
+        end
         `uvm_info(get_type_name(), "Finish creating add instruction", UVM_LOW)
     endtask
 endclass

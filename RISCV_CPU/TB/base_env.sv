@@ -4,7 +4,7 @@ class base_env extends uvm_env;
     base_agent agt;
     im_agent im_agt;
     reset_agent r_agt;
-    base_scoreboard scb;
+    im_scoreboard scb;
 
     function new (string name = "base_env", uvm_component parent);
         super.new(name,parent);
@@ -15,10 +15,11 @@ class base_env extends uvm_env;
         // agt = base_agent::type_id::create("agt",this);
         im_agt = im_agent::type_id::create("im_agt",this);
         r_agt = reset_agent::type_id::create("r_agt",this);
-        scb = base_scoreboard::type_id::create("scb", this);
+        scb = im_scoreboard::type_id::create("scb", this);
     endfunction
 
     function void connect_phase (uvm_phase phase);
         super.connect_phase(phase);
+        im_agt.mon.item_collected_port.connect(this.scb.item_collected_export);
     endfunction
 endclass

@@ -17,7 +17,11 @@ module CPU_Top_tb_top;
         .clk(clk),
         .rst_n(cpu_if.rst_n),
         .im_wdata_i(im_if.ins),
-        .im_PC_o(im_if.PC_o)
+        .im_PC_o(im_if.PC_o),
+        .rs1_o(im_if.rs1),
+        .rs2_o(im_if.rs2),
+        .rd_o(im_if.rd),
+        .ALU_o(im_if.ALU_o)
     );
 
     initial begin

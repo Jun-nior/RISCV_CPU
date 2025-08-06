@@ -1,11 +1,11 @@
 module ALU #(
     
 ) (
-    input   [31:0]  in1,
-    input   [31:0]  in2,
-    input   [3:0]   control_i,
-    output  [31:0]  ALU_o,
-    output          zero
+    input           [31:0]  in1,
+    input           [31:0]  in2,
+    input           [3:0]   control_i,
+    output signed   [31:0]  ALU_o,
+    output                  zero
 );
 
 logic   [31:0]  ALU_o_reg;

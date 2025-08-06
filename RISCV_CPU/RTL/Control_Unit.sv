@@ -27,7 +27,7 @@ always_comb begin
         end
         // I-type
         7'b0010011: begin
-            {ALUSrc_reg, MemtoReg_reg, RegWrite_reg, MemRead_reg, MemWrite_reg, Branch_reg, ALUOp_reg[1], ALUOp_reg[0]} = 8'b10100010;
+            {ALUSrc_reg, MemtoReg_reg, RegWrite_reg, MemRead_reg, MemWrite_reg, Branch_reg, ALUOp_reg[1], ALUOp_reg[0]} = 8'b10100000;
         end
         // Load-type
         7'b0000011: begin

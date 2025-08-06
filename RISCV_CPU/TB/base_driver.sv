@@ -27,7 +27,7 @@ class im_driver extends base_driver#(im_item);
             seq_item_port.get_next_item(req);
             `uvm_info(get_type_name(), "Driver get add instruction", UVM_LOW)
             `uvm_info(get_type_name(), $sformatf("Driver get: \n%s", req.sprint()), UVM_LOW)
-            im_vif.ins <= req.instruction;
+            im_vif.tb_cb.ins <= req.instruction;
             @(im_vif.tb_cb);
             seq_item_port.item_done();
         end
@@ -54,7 +54,7 @@ class reset_driver extends base_driver#(reset_item);
             seq_item_port.get_next_item(req);
             `uvm_info(get_type_name(), "reset pkt", UVM_LOW)
             cpu_vif.rst_n <= req.rst_n;
-            repeat(2) begin
+            repeat(1) begin
                 @(posedge cpu_vif.tb_cb);
             end
             seq_item_port.item_done();

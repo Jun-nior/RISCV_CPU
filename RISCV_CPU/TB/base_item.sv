@@ -13,10 +13,11 @@ class im_item extends base_item;
     rand logic [4:0]    rs1;
     rand logic [4:0]    rs2;
     rand logic [4:0]    rd;
-    rand logic [11:0]   imm; // random value for addi
+    rand logic signed [11:0]   imm; // random value for addi
 
     rand logic [31:0]   instruction;
     logic [31:0]        PC_o;
+    logic signed [31:0] ALU_o;
 
     constraint c_build_instruction {
         solve inst_type before instruction;
@@ -36,6 +37,7 @@ class im_item extends base_item;
         `uvm_field_int(rs2, UVM_ALL_ON | UVM_DEC)
         `uvm_field_int(rd, UVM_ALL_ON | UVM_DEC)
         `uvm_field_int(imm, UVM_ALL_ON | UVM_DEC)
+        `uvm_field_int(ALU_o, UVM_ALL_ON | UVM_DEC)
         `uvm_field_int(instruction, UVM_ALL_ON | UVM_HEX)
         `uvm_field_int(PC_o, UVM_ALL_ON | UVM_HEX)
     `uvm_object_utils_end
