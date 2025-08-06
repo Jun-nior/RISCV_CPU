@@ -7,7 +7,7 @@ class base_item extends uvm_sequence_item;
 endclass
 
 class im_item extends base_item;
-    typedef enum {ADD, ADDI} inst_type_e;
+    typedef enum {ADD, ADDI, SUB, AND, OR, XOR, ORI, XORI, ANDI} inst_type_e;
 
     rand inst_type_e    inst_type;
     rand logic [4:0]    rs1;
@@ -27,6 +27,34 @@ class im_item extends base_item;
         }
         (inst_type == ADDI) -> {
             instruction == {imm, rs1, 3'b000, rd, 7'b0010011};
+            rs2 == 0;
+        }
+        (inst_type == SUB) -> {
+            instruction == {7'b0100000, rs2, rs1, 3'b000, rd, 7'b0110011};
+            imm == 0;
+        }
+        (inst_type == AND) -> {
+            instruction == {7'b0000000, rs2, rs1, 3'b111, rd, 7'b0110011};
+            imm == 0;
+        }
+        (inst_type == OR) -> {
+            instruction == {7'b0000000, rs2, rs1, 3'b110, rd, 7'b0110011};
+            imm == 0;
+        }
+        (inst_type == XOR) -> {
+            instruction == {7'b0000000, rs2, rs1, 3'b100, rd, 7'b0110011};
+            imm == 0;
+        }
+        (inst_type == ORI) -> {
+            instruction == {imm, rs1, 3'b110, rd, 7'b0010011};
+            rs2 == 0;
+        }
+        (inst_type == XORI) -> {
+            instruction == {imm, rs1, 3'b100, rd, 7'b0010011};
+            rs2 == 0;
+        }
+        (inst_type == ANDI) -> {
+            instruction == {imm, rs1, 3'b111, rd, 7'b0010011};
             rs2 == 0;
         }
     }

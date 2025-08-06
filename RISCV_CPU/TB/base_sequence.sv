@@ -30,8 +30,9 @@ class im_add_sequence extends base_sequence#(im_item);
         // })
         repeat(1000) begin
             `uvm_do(req)
+            `uvm_info($sformatf("%s", req.inst_type), "Sending instruction", UVM_LOW)
         end
-        `uvm_info(get_type_name(), "Finish creating add instruction", UVM_LOW)
+        `uvm_info(get_type_name(), "Finish creating instruction", UVM_LOW)
     endtask
 endclass
 

@@ -6,7 +6,7 @@ FILE_LIST?=file.f
 
 UVM_TEST?=base_test
 
-UVM_VERBOSITY?=UVM_LOW
+UVM_VERBOSITY?=UVM_MEDIUM
 NO_OF_TRANSACTIONS?=1
 
 ifeq ($(OS),Windows_NT)

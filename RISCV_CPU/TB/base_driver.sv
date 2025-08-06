@@ -25,8 +25,8 @@ class im_driver extends base_driver#(im_item);
     virtual task run_phase(uvm_phase phase);
         forever begin
             seq_item_port.get_next_item(req);
-            `uvm_info(get_type_name(), "Driver get add instruction", UVM_LOW)
-            `uvm_info(get_type_name(), $sformatf("Driver get: \n%s", req.sprint()), UVM_LOW)
+            `uvm_info(get_type_name(), "Driver get add instruction", UVM_HIGH)
+            `uvm_info(get_type_name(), $sformatf("Driver get: \n%s", req.sprint()), UVM_HIGH)
             im_vif.tb_cb.ins <= req.instruction;
             @(im_vif.tb_cb);
             seq_item_port.item_done();
@@ -52,7 +52,7 @@ class reset_driver extends base_driver#(reset_item);
         super.run_phase(phase);
         forever begin
             seq_item_port.get_next_item(req);
-            `uvm_info(get_type_name(), "reset pkt", UVM_LOW)
+            `uvm_info(get_type_name(), "reset pkt", UVM_HIGH)
             cpu_vif.rst_n <= req.rst_n;
             repeat(1) begin
                 @(posedge cpu_vif.tb_cb);

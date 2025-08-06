@@ -40,7 +40,7 @@ class im_monitor extends base_monitor #(im_item);
             item.rd = im_vif.tb_cb.rd;
             item.ALU_o = im_vif.tb_cb.ALU_o;
             item.instruction = im_vif.ins;
-            `uvm_info(get_type_name(), $sformatf("Monitor get: \n%s", item.sprint()), UVM_LOW)
+            `uvm_info(get_type_name(), $sformatf("Monitor get: \n%s", item.sprint()), UVM_HIGH)
             item_collected_port.write(item);
         end
     endtask

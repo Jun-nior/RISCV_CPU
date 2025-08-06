@@ -29,6 +29,10 @@ always @(control_i or in1 or in2) begin
             ALU_o_reg = in1 - in2;
             zero_reg = (in1 == in2) ? 1 : 0;
         end
+        4'b0100: begin
+            ALU_o_reg = in1 ^ in2;
+            zero_reg = 0;
+        end
         default: begin
             zero_reg = 0;
             ALU_o_reg = 0;
