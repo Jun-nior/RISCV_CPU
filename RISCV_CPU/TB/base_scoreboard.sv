@@ -102,6 +102,50 @@ class im_scoreboard extends base_scoreboard #(im_item);
                 end
                 if (is_match) mem[e_rd] = expected_result;
             end
+            7'b1100011: begin
+                logic signed [12:0] e_b_imm;
+                logic signed [31:0] signed_b_imm;
+                logic [31:0] e_next_PC;
+                bit branch_taken;
+
+                `uvm_info(get_type_name(), "Decoding B-type instruction", UVM_HIGH)
+
+                e_rs1 = cur_packet.instruction[19:15];
+                e_rs2 = cur_packet.instruction[24:20];
+
+                e_b_imm[12]   = cur_packet.instruction[31];
+                e_b_imm[11]   = cur_packet.instruction[7];
+                e_b_imm[10:5] = cur_packet.instruction[30:25];
+                e_b_imm[4:1]  = cur_packet.instruction[11:8];
+                e_b_imm[0]    = 1'b0;
+
+                signed_b_imm = {{19{e_b_imm[12]}}, e_b_imm};
+                funct3 = cur_packet.instruction[14:12];
+                case (funct3)
+                    3'b000: // BEQ
+                        branch_taken = (mem[e_rs1] == mem[e_rs2]);
+                    3'b001: // BNE
+                        branch_taken = (mem[e_rs1] != mem[e_rs2]);
+                    default: begin
+                        `uvm_error("FAIL", $sformatf("Unsupported B-type funct3: %b", funct3))
+                        is_match = 0;
+                    end
+                endcase
+
+                if (is_match) begin
+                    if (branch_taken) begin
+                        e_next_PC = cur_packet.PC_o + signed_b_imm;
+                    end else begin
+                        e_next_PC = cur_packet.PC_o + 4;
+                    end
+
+                    if (e_rs1 != cur_packet.rs1 || 
+                        e_rs2 != cur_packet.rs2 || 
+                        e_next_PC != cur_packet.next_PC_o) begin
+                        is_match = 0;
+                    end
+                end
+            end
             default: begin
                 `uvm_error("FAIL", $sformatf("Unknown opcode 0x%h, skipping comparison", opcode))
                 is_match = 0;

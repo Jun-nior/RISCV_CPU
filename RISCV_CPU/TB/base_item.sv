@@ -7,16 +7,18 @@ class base_item extends uvm_sequence_item;
 endclass
 
 class im_item extends base_item;
-    typedef enum {ADD, ADDI, SUB, AND, OR, XOR, ORI, XORI, ANDI} inst_type_e;
+    typedef enum {ADD, ADDI, SUB, AND, OR, XOR, ORI, XORI, ANDI, BEQ, BNE} inst_type_e;
 
     rand inst_type_e    inst_type;
     rand logic [4:0]    rs1;
     rand logic [4:0]    rs2;
     rand logic [4:0]    rd;
     rand logic signed [11:0]   imm; // random value for addi
+    rand logic signed [12:0] b_imm; // random value for beq
 
     rand logic [31:0]   instruction;
     logic [31:0]        PC_o;
+    logic [31:0]        next_PC_o;
     logic signed [31:0] ALU_o;
 
     constraint c_build_instruction {
@@ -57,6 +59,18 @@ class im_item extends base_item;
             instruction == {imm, rs1, 3'b111, rd, 7'b0010011};
             rs2 == 0;
         }
+        (inst_type == BEQ) -> {
+            instruction == {b_imm[12], b_imm[10:5], rs2, rs1, 3'b000, b_imm[4:1], b_imm[11], 7'b1100011};
+            rd == 0; imm == 0;
+        }
+        (inst_type == BNE) -> {
+            instruction == {b_imm[12], b_imm[10:5], rs2, rs1, 3'b001, b_imm[4:1], b_imm[11], 7'b1100011};
+            rd == 0; imm == 0;
+        }
+    }
+
+    constraint c_branch_alignment {
+        b_imm[1:0] == 2'b00;
     }
 
     `uvm_object_utils_begin(im_item)
@@ -65,9 +79,11 @@ class im_item extends base_item;
         `uvm_field_int(rs2, UVM_ALL_ON | UVM_DEC)
         `uvm_field_int(rd, UVM_ALL_ON | UVM_DEC)
         `uvm_field_int(imm, UVM_ALL_ON | UVM_DEC)
+        `uvm_field_int(b_imm, UVM_ALL_ON | UVM_DEC)
         `uvm_field_int(ALU_o, UVM_ALL_ON | UVM_DEC)
         `uvm_field_int(instruction, UVM_ALL_ON | UVM_HEX)
         `uvm_field_int(PC_o, UVM_ALL_ON | UVM_HEX)
+        `uvm_field_int(next_PC_o, UVM_ALL_ON | UVM_HEX)
     `uvm_object_utils_end
 
     function new (string name = "im_item");

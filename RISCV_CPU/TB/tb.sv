@@ -18,6 +18,7 @@ module CPU_Top_tb_top;
         .rst_n(cpu_if.rst_n),
         .im_wdata_i(im_if.ins),
         .im_PC_o(im_if.PC_o),
+        .im_next_PC_o(im_if.next_PC_o),
         .rs1_o(im_if.rs1),
         .rs2_o(im_if.rs2),
         .rd_o(im_if.rd),

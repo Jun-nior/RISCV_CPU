@@ -23,6 +23,7 @@ class base_test extends uvm_test;
         phase.raise_objection(this);
         reset_seq.start(env.r_agt.sqr);
         add_seq.start(env.im_agt.sqr);
+        #10;
         phase.drop_objection(this);
         `uvm_info(get_type_name(), "Finish starting add sequence", UVM_LOW)
     endtask

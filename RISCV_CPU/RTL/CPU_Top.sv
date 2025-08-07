@@ -7,6 +7,7 @@ module CPU_Top #(
 
     //test-only purpose IM
     output  [ADDR_WIDTH - 1 : 0]    im_PC_o,
+    output  [ADDR_WIDTH - 1 : 0]    im_next_PC_o,
     input   [ADDR_WIDTH - 1 : 0]    im_wdata_i,
 
     //monitor-capture-only purpose
@@ -59,6 +60,7 @@ AdderPC Add1 (
 // );
 
 assign im_PC_o = PC_top;
+assign im_next_PC_o = mux_o_PC_top; // not PC_o since one cycle clock later the PC is updated (check the upcoming value for PC_o here instead)
 assign im_top = im_wdata_i;
 
 Register_File Registers (
@@ -125,6 +127,7 @@ Adder Add2 (
 );
 
 AND AND (
+    .func3(im_top[14:12]),
     .branch(Branch_top),
     .zero(zero_top),
     .and_o(and_o_top)
