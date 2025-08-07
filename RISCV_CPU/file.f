@@ -12,6 +12,7 @@
 ./RTL/IM.sv
 ./RTL/ImmGen.sv
 ./RTL/Mux.sv
+./RTL/Mem_Mux.sv
 ./RTL/PC.sv
 ./RTL/Regfile.sv
 

@@ -146,6 +146,43 @@ class im_scoreboard extends base_scoreboard #(im_item);
                     end
                 end
             end
+            7'b1101111: begin
+                logic signed [20:0] e_j_imm;
+                logic signed [31:0] signed_j_imm;
+                logic [31:0] e_next_PC;
+                logic [31:0] e_link_addr; // PC+4
+
+                `uvm_info(get_type_name(), "Decoding J-type instruction", UVM_HIGH)
+                
+                // 1. Giải mã các trường từ item DỰ KIẾN
+                e_rd = cur_packet.instruction[11:7];
+                
+                // Tái cấu trúc giá trị tức thời 21-bit có dấu từ mã lệnh
+                e_j_imm[20]    = cur_packet.instruction[31];
+                e_j_imm[19:12] = cur_packet.instruction[19:12];
+                e_j_imm[11]    = cur_packet.instruction[20];
+                e_j_imm[10:1]  = cur_packet.instruction[30:21];
+                e_j_imm[0]     = 1'b0;
+
+                signed_j_imm = {{11{e_j_imm[20]}}, e_j_imm};
+
+                e_next_PC = cur_packet.PC_o + signed_j_imm;
+                e_link_addr = cur_packet.PC_o + 4;
+                if (e_rd != cur_packet.rd || 
+                    e_next_PC != cur_packet.next_PC_o ||
+                    e_link_addr != cur_packet.mem_data_o) begin // So sánh giá trị ghi lại
+                    is_match = 0;
+                    // `uvm_info(get_type_name(), $sformatf("JAL Mismatch Details:\n"
+                    //     , "\t- RD Addr:   exp=%0d, act=%0d\n", e_rd, cur_packet.rd
+                    //     , "\t- Next PC:   exp=0x%h, act=0x%h\n", e_next_PC, cur_packet.next_PC_o
+                    //     , "\t- Link Addr: exp=0x%h, act=0x%h", e_link_addr, cur_packet.mem_data_o), UVM_LOW)
+                end
+                
+                // 4. Cập nhật mô hình bộ nhớ nếu so sánh đúng
+                if (is_match) begin
+                    mem[e_rd] = e_link_addr;
+                end
+            end
             default: begin
                 `uvm_error("FAIL", $sformatf("Unknown opcode 0x%h, skipping comparison", opcode))
                 is_match = 0;

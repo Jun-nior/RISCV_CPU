@@ -11,7 +11,7 @@ logic   [ADDR_WIDTH - 1 : 0]    PC_o_reg;
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        PC_o_reg <= 'b0;
+        PC_o_reg <= -4;
     end else begin
         PC_o_reg <= PC_i;
     end

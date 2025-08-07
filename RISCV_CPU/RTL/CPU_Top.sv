@@ -14,7 +14,8 @@ module CPU_Top #(
     output  [4 : 0]                 rs1_o,
     output  [4 : 0]                 rs2_o,
     output  [4 : 0]                 rd_o,
-    output  [ADDR_WIDTH - 1 : 0]    ALU_o
+    output  [ADDR_WIDTH - 1 : 0]    ALU_o,
+    output  [ADDR_WIDTH - 1 : 0]    memory_data_o
 );
 
 logic   [ADDR_WIDTH - 1 : 0]    PC_top;
@@ -36,7 +37,8 @@ logic                           and_o_top;
 logic                           Branch_top;
 logic                           MemRead_top;
 logic                           MemWrite_top;
-logic                           MemtoReg_top;
+logic   [1:0]                   MemtoReg_top;
+logic                           Jump_top;
 logic   [1:0]                   ALUOp_top;
 logic   [3:0]                   control_o_top;
 
@@ -89,11 +91,12 @@ Control_Unit Control(
     .instruction(im_top[6:0]),
     .Branch(Branch_top),
     .MemRead(MemRead_top),
-    .MemtoReg(MemtoReg_top),
+    .MemtoReg(MemtoReg_top[0]),
     .ALUOp(ALUOp_top),
     .MemWrite(MemWrite_top),
     .ALUSrc(ALUSrc_top),
-    .RegWrite(RegWrite_top)
+    .RegWrite(RegWrite_top),
+    .Jump(MemtoReg_top[1])
 );
 
 ALU_Control ALU_Control(
@@ -112,6 +115,7 @@ ALU ALU(
 );
 
 assign ALU_o = ALU_o_top;
+assign memory_data_o = mem_mux_data_o;
 
 Mux ALU_mux (
     .sel(ALUSrc_top),
@@ -128,6 +132,7 @@ Adder Add2 (
 
 AND AND (
     .func3(im_top[14:12]),
+    .jump(MemtoReg_top[1]),
     .branch(Branch_top),
     .zero(zero_top),
     .and_o(and_o_top)
@@ -150,10 +155,11 @@ Data_Memory Data_Memory (
     .rdata(rdata_mem_top)
 );
 
-Mux Memory_mux (
+Mem_Mux Memory_mux (
     .sel(MemtoReg_top),
     .a(ALU_o_top),
     .b(rdata_mem_top),
+    .c(adder1_o_top),
     .mux_o(mem_mux_data_o)
 );
 

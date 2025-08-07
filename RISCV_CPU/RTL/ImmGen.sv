@@ -6,7 +6,7 @@ module Immediate_Generator#(
     output  [31:0]                  ImmExt
 );
 
-logic   [31:0]  ImmExt_reg;
+logic   [31:0]  ImmExt_reg = 0;
 
 always @(*) begin
     case (opcode)
@@ -25,6 +25,10 @@ always @(*) begin
         // Branch-type
         7'b1100011: begin
             ImmExt_reg = {{19{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8], 1'b0}; // shift left 1 here (adding 0 at the end)
+        end
+        // JAL
+        7'b1101111: begin
+            ImmExt_reg = {{12{instruction[31]}}, instruction[19:12], instruction[20], instruction[30:21], 1'b0};
         end
         default: begin
             ImmExt_reg = 32'b0;

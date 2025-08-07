@@ -17,8 +17,8 @@ endif
 
 all: clean run_uvm
 
-run_uvm: 
-# 	mkdir $(TEST_MODULE)
+run_uvm: clean
+	mkdir $(TEST_MODULE)
 	qrun -verbose -lint=default -parallel -vlog.sv \
 		-vopt.access=rw+/. \
 		-f $(FILE_LIST) \
