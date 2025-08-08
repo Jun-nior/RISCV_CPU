@@ -17,8 +17,8 @@ endif
 
 all: clean run_uvm
 
-run_uvm: clean
-	mkdir $(TEST_MODULE)
+run_uvm: 
+# 	mkdir $(TEST_MODULE)
 	qrun -verbose -lint=default -parallel -vlog.sv \
 		-vopt.access=rw+/. \
 		-f $(FILE_LIST) \
@@ -28,7 +28,8 @@ run_uvm: clean
 		-top $(TOP_MODULE) \
 		+UVM_TESTNAME=$(UVM_TEST) \
 		+UVM_VERBOSITY=$(UVM_VERBOSITY) \
-		-coverage +cover=bcestf\
+		-coverage +cover=bcestf \
+		-cvgperinstance	\
 		-outdir $(TEST_MODULE) \
 		-l $(TEST_MODULE)/qrun.log \
 		-designfile $(TEST_MODULE)/$(TEST_MODULE).bin \
@@ -40,10 +41,10 @@ report_coverage:
 	vcover report -summary $(UVM_TEST)_0.ucdb
 	@echo "================================================"
 
-report_html: run_uvm
+report_html: 
 	@echo ""
 	@echo "=============== GENERATING HTML REPORT ==============="
-	vcover report -html -output $(TEST_MODULE)/coverage_html $(UVM_TEST)_0.ucdb
+	vcover report -html -details -output $(TEST_MODULE)/coverage_html -annotate  $(UVM_TEST)_0.ucdb
 	@echo "HTML report generated in: $(TEST_MODULE)/coverage_html"
 	@echo "===================================================="
 

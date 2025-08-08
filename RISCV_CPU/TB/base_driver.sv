@@ -1,8 +1,9 @@
 class base_driver #(type REQ = uvm_sequence_item, RSP = REQ) extends uvm_driver#(REQ, RSP);
     `uvm_component_utils(base_driver)
-
+    uvm_analysis_port #(REQ) item_driven_port;
     function new (string name = "base_driver", uvm_component parent);
         super.new(name,parent);
+        item_driven_port = new("item_driven_port", this);
     endfunction
 
 endclass
@@ -30,6 +31,7 @@ class im_driver extends base_driver#(im_item);
             im_vif.tb_cb.ins <= req.instruction;
             @(im_vif.tb_cb);
             seq_item_port.item_done();
+            item_driven_port.write(req);
         end
     endtask
 endclass

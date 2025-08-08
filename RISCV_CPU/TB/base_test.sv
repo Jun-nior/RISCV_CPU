@@ -33,4 +33,20 @@ class base_test extends uvm_test;
         `uvm_info(get_type_name(), "---UVM Testbench Topology---", UVM_LOW)
         uvm_root::get().print_topology();
     endfunction
+
+    virtual function void report_phase(uvm_phase phase);
+        super.report_phase(phase);
+
+        `uvm_info("--COVERAGE--", "--- Functional Coverage Report ---", UVM_LOW)
+
+        
+        `uvm_info(  get_type_name(), 
+                    $sformatf("Instruction Mix Coverage: %3.2f %%", env.cov.instr_mix_type.get_coverage()), 
+                    UVM_LOW)
+        `uvm_info(  get_type_name(), 
+                    $sformatf("Register used Coverage: %3.2f %%", env.cov.reg_usage_cg.get_coverage()), 
+                    UVM_LOW)
+
+        `uvm_info(get_type_name(), "----------------------------------", UVM_LOW)
+    endfunction
 endclass

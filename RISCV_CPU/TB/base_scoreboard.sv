@@ -1,3 +1,7 @@
+`define UVM_COLOR_PASS "\033[0;32m" // Green
+`define UVM_COLOR_FAIL "\033[0;31m" // Red
+`define UVM_COLOR_RESET "\033[0m"   // Reset to default color
+
 class base_scoreboard #(type T = uvm_sequence_item) extends uvm_scoreboard;
     `uvm_component_utils(base_scoreboard)
 
@@ -19,12 +23,16 @@ class im_scoreboard extends base_scoreboard #(im_item);
     `uvm_component_utils(im_scoreboard)
 
     im_item cur_packet;
-    int mem[32];
+    int reg_mem[32];
+    int d_mem[64];
 
     function new (string name = "im_scoreboard", uvm_component parent);
         super.new(name,parent);
         for (int i = 0;i < 32; i++) begin
-            mem[i] = i;
+            reg_mem[i] = i;
+        end
+        for (int i = 0; i < 64; i++) begin
+            d_mem[i] = i%64;
         end
     endfunction
 
@@ -58,11 +66,11 @@ class im_scoreboard extends base_scoreboard #(im_item);
                 funct7_5 = cur_packet.instruction[30];
 
                 case ({funct7_5, funct3})
-                    4'b0_000: expected_result = mem[e_rs1] + mem[e_rs2]; // ADD
-                    4'b1_000: expected_result = mem[e_rs1] - mem[e_rs2]; // SUB
-                    4'b0_111: expected_result = mem[e_rs1] & mem[e_rs2]; // AND
-                    4'b0_110: expected_result = mem[e_rs1] | mem[e_rs2]; // OR
-                    4'b0_100: expected_result = mem[e_rs1] ^ mem[e_rs2]; // XOR
+                    4'b0_000: expected_result = reg_mem[e_rs1] + reg_mem[e_rs2]; // ADD
+                    4'b1_000: expected_result = reg_mem[e_rs1] - reg_mem[e_rs2]; // SUB
+                    4'b0_111: expected_result = reg_mem[e_rs1] & reg_mem[e_rs2]; // AND
+                    4'b0_110: expected_result = reg_mem[e_rs1] | reg_mem[e_rs2]; // OR
+                    4'b0_100: expected_result = reg_mem[e_rs1] ^ reg_mem[e_rs2]; // XOR
                     default: begin
                         `uvm_error("FAIL", $sformatf("Unsupported R-type funct7/funct3: %b_%b", funct7_5, funct3))
                         is_match = 0;
@@ -75,7 +83,7 @@ class im_scoreboard extends base_scoreboard #(im_item);
                     expected_result != cur_packet.ALU_o) begin
                     is_match = 0;
                 end
-                if (is_match) mem[e_rd] = expected_result; 
+                if (is_match) reg_mem[e_rd] = expected_result; 
             end
             // I-type
             7'b0010011: begin
@@ -88,10 +96,10 @@ class im_scoreboard extends base_scoreboard #(im_item);
                 signed_imm = {{20{e_imm[11]}}, e_imm};
 
                 case(funct3)
-                    3'b000: expected_result = mem[e_rs1] + signed_imm; // ADDI
-                    3'b111: expected_result = mem[e_rs1] & signed_imm; // ANDI
-                    3'b110: expected_result = mem[e_rs1] | signed_imm; // ORI
-                    3'b100: expected_result = mem[e_rs1] ^ signed_imm; // XORI
+                    3'b000: expected_result = reg_mem[e_rs1] + signed_imm; // ADDI
+                    3'b111: expected_result = reg_mem[e_rs1] & signed_imm; // ANDI
+                    3'b110: expected_result = reg_mem[e_rs1] | signed_imm; // ORI
+                    3'b100: expected_result = reg_mem[e_rs1] ^ signed_imm; // XORI
                     default: begin
                         `uvm_error("FAIL", $sformatf("Unsupported I-type funct3: %b", funct3))
                         is_match = 0;
@@ -100,7 +108,7 @@ class im_scoreboard extends base_scoreboard #(im_item);
                 if (e_rd != cur_packet.rd || e_rs1 != cur_packet.rs1 || expected_result != cur_packet.ALU_o) begin
                     is_match = 0;
                 end
-                if (is_match) mem[e_rd] = expected_result;
+                if (is_match) reg_mem[e_rd] = expected_result;
             end
             7'b1100011: begin
                 logic signed [12:0] e_b_imm;
@@ -123,9 +131,9 @@ class im_scoreboard extends base_scoreboard #(im_item);
                 funct3 = cur_packet.instruction[14:12];
                 case (funct3)
                     3'b000: // BEQ
-                        branch_taken = (mem[e_rs1] == mem[e_rs2]);
+                        branch_taken = (reg_mem[e_rs1] == reg_mem[e_rs2]);
                     3'b001: // BNE
-                        branch_taken = (mem[e_rs1] != mem[e_rs2]);
+                        branch_taken = (reg_mem[e_rs1] != reg_mem[e_rs2]);
                     default: begin
                         `uvm_error("FAIL", $sformatf("Unsupported B-type funct3: %b", funct3))
                         is_match = 0;
@@ -154,10 +162,8 @@ class im_scoreboard extends base_scoreboard #(im_item);
 
                 `uvm_info(get_type_name(), "Decoding J-type instruction", UVM_HIGH)
                 
-                // 1. Giải mã các trường từ item DỰ KIẾN
                 e_rd = cur_packet.instruction[11:7];
                 
-                // Tái cấu trúc giá trị tức thời 21-bit có dấu từ mã lệnh
                 e_j_imm[20]    = cur_packet.instruction[31];
                 e_j_imm[19:12] = cur_packet.instruction[19:12];
                 e_j_imm[11]    = cur_packet.instruction[20];
@@ -175,12 +181,62 @@ class im_scoreboard extends base_scoreboard #(im_item);
                     // `uvm_info(get_type_name(), $sformatf("JAL Mismatch Details:\n"
                     //     , "\t- RD Addr:   exp=%0d, act=%0d\n", e_rd, cur_packet.rd
                     //     , "\t- Next PC:   exp=0x%h, act=0x%h\n", e_next_PC, cur_packet.next_PC_o
-                    //     , "\t- Link Addr: exp=0x%h, act=0x%h", e_link_addr, cur_packet.mem_data_o), UVM_LOW)
+                    //     , "\t- Link Addr: exp=0x%h, act=0x%h", e_link_addr, cur_packet.reg_mem_data_o), UVM_LOW)
                 end
                 
-                // 4. Cập nhật mô hình bộ nhớ nếu so sánh đúng
                 if (is_match) begin
-                    mem[e_rd] = e_link_addr;
+                    reg_mem[e_rd] = e_link_addr;
+                end
+            end
+            7'b0000011: begin
+                logic unsigned [31:0] e_addr;
+                logic signed [31:0] e_load_data;
+                `uvm_info(get_type_name(), "Decoding Load-type instruction (LW)", UVM_HIGH)
+
+                e_rd  = cur_packet.instruction[11:7];
+                e_rs1 = cur_packet.instruction[19:15];
+                e_imm = cur_packet.instruction[31:20];
+
+                signed_imm = {{20{e_imm[11]}}, e_imm};
+
+                e_addr = reg_mem[e_rs1] + signed_imm;
+
+                e_load_data = d_mem[e_addr%64]; 
+                // $display(e_load_data, e_addr);
+
+                if (e_rd != cur_packet.rd ||
+                    e_rs1 != cur_packet.rs1 ||
+                    e_addr != cur_packet.ALU_o ||
+                    e_load_data != cur_packet.mem_data_o) begin
+                    is_match = 0;
+                end
+
+                if (is_match) begin
+                    reg_mem[e_rd] = e_load_data;
+                end
+            end
+            7'b0100011: begin
+                logic unsigned [31:0] e_addr;
+                logic signed [31:0] e_store_data;
+                `uvm_info(get_type_name(), "Decoding Store-type instruction (SW)", UVM_HIGH)
+                
+                e_rs1 = cur_packet.instruction[19:15];
+                e_rs2 = cur_packet.instruction[24:20];
+                e_imm = {cur_packet.instruction[31:25], cur_packet.instruction[11:7]};
+                signed_imm = {{20{e_imm[11]}}, e_imm};
+
+                e_addr = reg_mem[e_rs1] + signed_imm;
+                e_store_data = reg_mem[e_rs2];
+
+                if (e_rs1 != cur_packet.rs1 ||
+                    e_rs2 != cur_packet.rs2 ||
+                    e_addr != cur_packet.ALU_o ||
+                    e_store_data != cur_packet.store_data_o) begin
+                    is_match = 0;
+                end
+
+                if (is_match) begin
+                    d_mem[e_addr % 64] = e_store_data;
                 end
             end
             default: begin
@@ -189,11 +245,11 @@ class im_scoreboard extends base_scoreboard #(im_item);
             end
         endcase
         if (is_match) begin
-            `uvm_info("PASS", "SCOREBOARD PASS: Item matched", UVM_LOW)
+            `uvm_info($sformatf("%sPASS%s", `UVM_COLOR_PASS, `UVM_COLOR_RESET), "SCOREBOARD: Item matched", UVM_LOW)
         end else begin
-            `uvm_error("FAIL", "SCOREBOARD FAIL: Item mismatch")
+            `uvm_error($sformatf("%sFAIL%s", `UVM_COLOR_FAIL, `UVM_COLOR_RESET), "SCOREBOARD: Item mismatch")
             `uvm_info(get_type_name(), $sformatf("Mismatch details:\nDecoded Expected: opcode=0x%h, rd=%d, rs1=%d, rs2=%d, imm=%d\nActual Packet:\n%s",
-                                                 opcode, e_rd, e_rs1, e_rs2, e_imm, cur_packet.sprint()), UVM_LOW)
+                                         opcode, e_rd, e_rs1, e_rs2, e_imm, cur_packet.sprint()), UVM_LOW)
         end
     endtask
 endclass

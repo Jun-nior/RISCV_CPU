@@ -15,14 +15,14 @@ interface im_interface(input logic clk);
     logic   [4:0]   rd;
     logic   [31:0]  ALU_o;
     logic   [31:0]  mem_data_o;
-
+    logic   [31:0]  store_data_o;
     clocking tb_cb @(posedge clk);
-        input PC_o, next_PC_o, rs1, rs2, rd, ALU_o, mem_data_o;
+        input PC_o, next_PC_o, rs1, rs2, rd, ALU_o, mem_data_o, store_data_o;
         output ins;
     endclocking
 
     modport DUT (
-        output PC_o, next_PC_o, rs1, rs2, rd, ALU_o, mem_data_o,
+        output PC_o, next_PC_o, rs1, rs2, rd, ALU_o, mem_data_o, store_data_o,
         input ins
     );
 endinterface

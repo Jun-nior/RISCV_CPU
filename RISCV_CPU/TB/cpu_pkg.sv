@@ -10,6 +10,7 @@ package cpu_pkg;
     // `include "base_sequencer.sv"
     `include "base_driver.sv"
     `include "base_monitor.sv"
+    `include "base_coverage.sv"
     `include "base_agent.sv"
     `include "base_scoreboard.sv"
     `include "base_env.sv"

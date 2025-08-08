@@ -7,7 +7,7 @@ class base_item extends uvm_sequence_item;
 endclass
 
 class im_item extends base_item;
-    typedef enum {ADD, ADDI, SUB, AND, OR, XOR, ORI, XORI, ANDI, BEQ, BNE, JAL} inst_type_e;
+    typedef enum {ADD, ADDI, SUB, AND, OR, XOR, ORI, XORI, ANDI, BEQ, BNE, JAL, LW, SW} inst_type_e;
 
     rand inst_type_e    inst_type;
     rand logic [4:0]    rs1;
@@ -22,6 +22,7 @@ class im_item extends base_item;
     logic [31:0]        next_PC_o;
     logic signed [31:0] ALU_o;
     logic [31:0]        mem_data_o; // for jal 
+    logic [31:0]        store_data_o; // for sw 
 
     constraint c_build_instruction {
         solve inst_type before instruction;
@@ -73,15 +74,23 @@ class im_item extends base_item;
             instruction == {j_imm[20], j_imm[10:1], j_imm[11], j_imm[19:12], rd, 7'b1101111};
             rs1 == 0; rs2 == 0; imm == 0; b_imm == 0;
         }
+        (inst_type == LW) -> {
+            instruction == {imm, rs1, 3'b000, rd, 7'b0000011};
+            rs2 == 0; b_imm == 0; j_imm == 0;
+        }
+        (inst_type == SW) -> {
+            instruction == {imm[11:5], rs2, rs1, 3'b000, imm[4:0], 7'b0100011};
+            rd == 0; b_imm == 0; j_imm == 0;
+        }
     }
 
     constraint c_branch_alignment {
         b_imm[1:0] == 2'b00;
     }
 
-    constraint c_valid_rd {
-        (inst_type inside {ADD, ADDI, SUB, AND, OR, XOR, ORI, XORI, ANDI, JAL}) -> rd != 0;
-    }
+    // constraint c_valid_rd {
+    //     (inst_type inside {ADD, ADDI, SUB, AND, OR, XOR, ORI, XORI, ANDI, JAL}) -> rd != 0;
+    // }
 
     `uvm_object_utils_begin(im_item)
         `uvm_field_enum(inst_type_e, inst_type, UVM_ALL_ON)
@@ -93,6 +102,7 @@ class im_item extends base_item;
         `uvm_field_int(j_imm, UVM_ALL_ON | UVM_HEX)
         `uvm_field_int(ALU_o, UVM_ALL_ON | UVM_DEC)
         `uvm_field_int(mem_data_o, UVM_ALL_ON | UVM_HEX)
+        `uvm_field_int(store_data_o, UVM_ALL_ON | UVM_HEX)
         `uvm_field_int(instruction, UVM_ALL_ON | UVM_HEX)
         `uvm_field_int(PC_o, UVM_ALL_ON | UVM_HEX)
         `uvm_field_int(next_PC_o, UVM_ALL_ON | UVM_HEX)

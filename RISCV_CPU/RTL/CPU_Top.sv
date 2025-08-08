@@ -15,7 +15,8 @@ module CPU_Top #(
     output  [4 : 0]                 rs2_o,
     output  [4 : 0]                 rd_o,
     output  [ADDR_WIDTH - 1 : 0]    ALU_o,
-    output  [ADDR_WIDTH - 1 : 0]    memory_data_o
+    output  [ADDR_WIDTH - 1 : 0]    memory_data_o,
+    output  [ADDR_WIDTH - 1 : 0]    store_data_o
 );
 
 logic   [ADDR_WIDTH - 1 : 0]    PC_top;
@@ -76,6 +77,8 @@ Register_File Registers (
     .rdata1(rdata1_top),
     .rdata2(rdata2_top)
 );
+
+assign store_data_o = rdata2_top;
 
 assign rs1_o    = im_top[19:15];
 assign rs2_o    = im_top[24:20];

@@ -23,7 +23,8 @@ module CPU_Top_tb_top;
         .rs2_o(im_if.rs2),
         .rd_o(im_if.rd),
         .ALU_o(im_if.ALU_o),
-        .memory_data_o(im_if.mem_data_o)
+        .memory_data_o(im_if.mem_data_o),
+        .store_data_o(im_if.store_data_o)
     );
 
     initial begin
