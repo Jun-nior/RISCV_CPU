@@ -6,8 +6,8 @@ class base_item extends uvm_sequence_item;
     endfunction
 endclass
 
+typedef enum {ADD, ADDI, SUB, AND, OR, XOR, ORI, XORI, ANDI, BEQ, BNE, JAL, LW, SW} inst_type_e;
 class im_item extends base_item;
-    typedef enum {ADD, ADDI, SUB, AND, OR, XOR, ORI, XORI, ANDI, BEQ, BNE, JAL, LW, SW} inst_type_e;
 
     rand inst_type_e    inst_type;
     rand logic [4:0]    rs1;

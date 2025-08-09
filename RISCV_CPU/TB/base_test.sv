@@ -46,6 +46,18 @@ class base_test extends uvm_test;
         `uvm_info(  get_type_name(), 
                     $sformatf("Register used Coverage: %3.2f %%", env.cov.reg_usage_cg.get_coverage()), 
                     UVM_LOW)
+        `uvm_info(  get_type_name(), 
+                    $sformatf("Immediate Coverage: %3.2f %%", env.cov.immediate_cg.get_coverage()), 
+                    UVM_LOW)
+        `uvm_info(  get_type_name(), 
+                    $sformatf("I-type Coverage: %3.2f %%", env.cov.i_type_immediate.get_coverage()), 
+                    UVM_LOW)
+        `uvm_info(  get_type_name(), 
+                    $sformatf("J/B-type Coverage: %3.2f %%", env.cov.j_b_immediate.get_coverage()), 
+                    UVM_LOW)
+        `uvm_info(  get_type_name(), 
+                    $sformatf("User Coverage: %3.2f %%", env.cov.basic_inst_type_writes_to_rd.get_coverage()), 
+                    UVM_LOW)
 
         `uvm_info(get_type_name(), "----------------------------------", UVM_LOW)
     endfunction
