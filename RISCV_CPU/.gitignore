@@ -10,3 +10,7 @@ history.cnt
 transcript
 *.bin
 *.db
+RISCV_CPU/base_test_0.ucdb
+*.log
+*.logerr
+*.vstf
