@@ -30,10 +30,11 @@ run_uvm:
 		+UVM_VERBOSITY=$(UVM_VERBOSITY) \
 		-coverage +cover=bcestf \
 		-cvgperinstance	\
+		-sva -assertdebug \
 		-outdir $(TEST_MODULE) \
 		-l $(TEST_MODULE)/qrun.log \
 		-designfile $(TEST_MODULE)/$(TEST_MODULE).bin \
-		-qwavedb=+memory=all+assertion+cell+signal+class+wavefile=$(TEST_MODULE)/$(TEST_MODULE).db
+		-qwavedb=+memory=all+cell+signal+assertion+class+wavefile=$(TEST_MODULE)/$(TEST_MODULE).db
 
 report_coverage: 
 	@echo ""

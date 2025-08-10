@@ -2,6 +2,7 @@
 import uvm_pkg::*;
 import cpu_pkg::*;
 `include "dut_if.sv"
+`include "sva_checker.sv"
 module CPU_Top_tb_top;
     logic clk, rst_n;
 
@@ -25,6 +26,16 @@ module CPU_Top_tb_top;
         .ALU_o(im_if.ALU_o),
         .memory_data_o(im_if.mem_data_o),
         .store_data_o(im_if.store_data_o)
+    );
+
+    bind CPU_Top sva_checker assertions_inst (
+        .clk(clk),
+        .rst_n(rst_n),
+        .PC(im_next_PC_o),
+        .MemRead(dut.MemRead_top),
+        .MemWrite(dut.MemWrite_top),
+        .RegWrite(dut.RegWrite_top),
+        .Branch(dut.Branch_top)
     );
 
     initial begin
