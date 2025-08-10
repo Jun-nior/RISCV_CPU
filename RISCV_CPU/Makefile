@@ -34,12 +34,13 @@ run_uvm:
 		-outdir $(TEST_MODULE) \
 		-l $(TEST_MODULE)/qrun.log \
 		-designfile $(TEST_MODULE)/$(TEST_MODULE).bin \
-		-qwavedb=+memory=all+cell+signal+assertion+class+wavefile=$(TEST_MODULE)/$(TEST_MODULE).db
+		-qwavedb=+memory=all+cell+signal+assertion+class+wavefile=$(TEST_MODULE)/$(TEST_MODULE).db \
+		-do "coverage save -onexit $(TEST_MODULE)/$(UVM_TEST)_0.ucdb; run -all; quit -f"
 
 report_coverage: 
 	@echo ""
 	@echo "=============== COVERAGE SUMMARY ==============="
-	vcover report -summary $(UVM_TEST)_0.ucdb
+	vcover report -summary $(TEST_MODULE)/$(UVM_TEST)_0.ucdb
 	@echo "================================================"
 
 report_html: 
